@@ -1,0 +1,11 @@
+component: website
+name: vue-starter
+app: egrader-ccb8e4b6
+
+inputs:
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./dist
+  bucketName: my-vue-starter
+  protocol: https
