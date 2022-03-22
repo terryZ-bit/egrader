@@ -1,0 +1,11 @@
+component: website
+name: egrader
+app: egrader-fea40be0
+
+inputs:
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./dist
+  bucketName: egrader
+  protocol: https
