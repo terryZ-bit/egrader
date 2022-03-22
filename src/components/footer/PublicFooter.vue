@@ -1,6 +1,6 @@
 <template>
   <div id="public-footer" style="text-align: center">
-    Copyright ©2016-2021 · 微助教 · 鄂ICP备16015292号-1  鄂公网安备 42018502000450号
+    Copyright ©2021-2022 · 云助教 · 渝ICP备2022001770号-1
   </div>
 </template>
 
