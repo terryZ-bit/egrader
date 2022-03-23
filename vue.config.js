@@ -14,7 +14,7 @@ module.exports = {
         // ============压缩图片 end============
     },
     devServer: {
-        port: 10010,
+        port: 20018,
         host: '0.0.0.0',
         https: false,
         open: true,

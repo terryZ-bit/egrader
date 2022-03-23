@@ -36,12 +36,11 @@
           <t-form-item name='verify_code' class="enroll-form-item" label="验证码">
             <t-input clearable v-model="formData.verify_code" placeholder="请输入验证码">
             </t-input>
-            <t-button theme="default" variant="outline" style="margin-left: 10px" @click="sendVerifyCode()">
-              获取验证码
+            <t-button theme="default" variant="outline" style="margin-left: 10px" @click="sendVerifyCode()" :disabled="get_verify_code_disabled">
+              {{s_code_button_text}}
             </t-button>
           </t-form-item>
           <t-button theme="primary" type="submit" block style="margin-left: 60px; margin-right: 60px; margin-top: 70px; width: 75%">注册</t-button>
-
         </t-form>
       </div>
     </div>
@@ -50,6 +49,7 @@
 
 <script>
 import axios from "axios";
+import md5 from "md5";
 
 export default {
   name: "Enroll",
@@ -61,7 +61,10 @@ export default {
         name: '',
         password_confirmed: '',
         verify_code: '',
-      }
+      },
+      get_verify_code_disabled: false,
+      s_code_button_text: "获取验证码",
+      time: 60
     }
   },
   methods: {
@@ -70,7 +73,22 @@ export default {
     },
     onSubmit({ validateResult, firstError }) {
       if (validateResult === true) {
-        this.$message.success('提交成功');
+        axios
+        .post('https://1862232491914219.cn-chengdu.fc.aliyuncs.com/2016-08-15/proxy/login.LATEST/register/',
+            {
+              email: this.formData.email,
+              password: md5(this.formData.password),
+              name: this.formData.name,
+              auth_code: this.formData.verify_code,
+            })
+        .then( resp => {
+          console.log(resp);
+          this.$message.success('注册成功！即将跳转登录界面')
+        })
+        .catch( err => {
+          console.log(err)
+          this.$message.error('注册失败！')
+        })
       } else {
         console.log('Errors: ', validateResult);
         this.$message.warning(firstError);
@@ -80,6 +98,19 @@ export default {
       if (this.$data.formData.email.length < 1) {
         this.$message.error('未输入邮箱！无法发送验证码')
       }
+      this.$data.get_verify_code_disabled = false
+      let me = this
+      me.get_verify_code_disabled = true
+      let interval = window.setInterval(function() {
+        me.s_code_button_text = + me.time
+        --me.time
+        if(me.time < 0) {
+          me.s_code_button_text = "重新发送"
+          me.time = 60
+          me.get_verify_code_disabled = false
+          window.clearInterval(interval)
+        }
+      }, 1000)
       axios
       .post('https://1862232491914219.cn-chengdu.fc.aliyuncs.com/2016-08-15/proxy/login.LATEST/send-email/',
           {

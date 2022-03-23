@@ -23,9 +23,25 @@
 <script>
 import PublicHeader from "@/components/header/PublicHeader";
 import PublicFooter from "@/components/footer/PublicFooter";
+import axios from "axios";
 export default {
   name: "RoleChoose",
-  components: {PublicFooter, PublicHeader}
+  components: {PublicFooter, PublicHeader},
+  data() {
+    return {
+      student_list: [],
+      teacher_list: [],
+      grader_list: []
+    }
+  },
+  mounted() {
+    axios
+    .post('', {})
+    .then( resp => {
+      console.log(resp)
+
+    })
+  }
 }
 </script>
 

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import login from "@/view/home/Login";
 import home from "@/view/home/Home";
 import testMain from "@/view/test/TestMain";
-import RoleChoose from "@/view/login/RoleChoose";
+import RoleChoose from "@/view/home/RoleChoose";
 import Enroll from "@/view/home/Enroll";
 import ForgotPassword from "@/view/home/ForgotPassword";
 
@@ -43,5 +43,4 @@ export default new Router({
             component: ForgotPassword
         }
     ],
-    mode: "history"
 })

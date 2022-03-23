@@ -6,6 +6,12 @@
         </t-header>
 
         <t-content>
+          <div class="slogan-area">
+            <h1 style="text-align: left; font-size: 32px">你的第一个助教系统</h1>
+            <p style="font-size: 20px; text-align: left; margin-top: 100px">必须是
+              <span style="color: #0052d9; font-size: 32px; font-family: 微軟正黑體,serif">云助教</span>
+            </p>
+          </div>
           <div class="home-page-main">
             <div class="login-form" style="margin-top: 60px">
               <p style="display: block; width: 100%; text-align: left;font-size: x-large; font-weight: bold; margin-left: 10px">欢迎回来！</p>
@@ -34,7 +40,7 @@
                   </t-input>
                 </t-form-item>
                 <t-form-item style="padding-top: 8px; margin: 10px">
-                  <t-button theme="primary" type="submit" block >登录</t-button>
+                  <t-button theme="primary" type="submit" block :loading="login_btn_loading">登录</t-button>
                 </t-form-item>
               </t-form>
               <div class="sign-in-check-area">
@@ -58,6 +64,8 @@
 import PublicHeader from "@/components/header/PublicHeader";
 import PublicFooter from "@/components/footer/PublicFooter";
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue';
+import axios from "axios";
+import md5 from "md5";
 const INITIAL_DATA = {
   account: '',
   password: '',
@@ -68,6 +76,7 @@ export default {
   data() {
     return {
       formData: { ...INITIAL_DATA },
+      login_btn_loading: false
     };
   },
 
@@ -77,8 +86,24 @@ export default {
     },
     onSubmit({ validateResult, firstError }) {
       if (validateResult === true) {
-        this.$message.success('提交成功');
-        this.$router.push('/RoleChoose')
+        this.login_btn_loading = true
+        axios
+        .post('https://1862232491914219.cn-chengdu.fc.aliyuncs.com/2016-08-15/proxy/login.LATEST/login/'
+        , {
+              email: this.formData.account,
+              password: md5(this.formData.password) ,
+            })
+        .then(resp => {
+          console.log(resp)
+          this.$message.success('登陆成功')
+          this.login_btn_loading = false
+          this.$router.push('/roleChoose')
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message.error('登录失败！请检查用户名或者密码！')
+          this.login_btn_loading = false
+        })
       } else {
         console.log('Errors: ', validateResult);
         this.$message.warning(firstError);
@@ -97,6 +122,14 @@ export default {
   .t-layout {
     background-image: linear-gradient(112.5deg, rgba(232, 232, 232, 0.03) 0%, rgba(232, 232, 232, 0.03) 2%,rgba(231, 231, 231, 0.03) 2%, rgba(231, 231, 231, 0.03) 4%,rgba(231, 231, 231, 0.03) 4%, rgba(231, 231, 231, 0.03) 11%,rgba(2, 2, 2, 0.03) 11%, rgba(2, 2, 2, 0.03) 67%,rgba(231, 231, 231, 0.03) 67%, rgba(231, 231, 231, 0.03) 90%,rgba(111, 111, 111, 0.03) 90%, rgba(111, 111, 111, 0.03) 100%),linear-gradient(157.5deg, rgba(210, 210, 210, 0.03) 0%, rgba(210, 210, 210, 0.03) 17%,rgba(254, 254, 254, 0.03) 17%, rgba(254, 254, 254, 0.03) 18%,rgba(96, 96, 96, 0.03) 18%, rgba(96, 96, 96, 0.03) 44%,rgba(159, 159, 159, 0.03) 44%, rgba(159, 159, 159, 0.03) 70%,rgba(24, 24, 24, 0.03) 70%, rgba(24, 24, 24, 0.03) 82%,rgba(16, 16, 16, 0.03) 82%, rgba(16, 16, 16, 0.03) 100%),linear-gradient(22.5deg, rgba(47, 47, 47, 0.03) 0%, rgba(47, 47, 47, 0.03) 32%,rgba(124, 124, 124, 0.03) 32%, rgba(124, 124, 124, 0.03) 40%,rgba(200, 200, 200, 0.03) 40%, rgba(200, 200, 200, 0.03) 42%,rgba(16, 16, 16, 0.03) 42%, rgba(16, 16, 16, 0.03) 64%,rgba(243, 243, 243, 0.03) 64%, rgba(243, 243, 243, 0.03) 94%,rgba(93, 93, 93, 0.03) 94%, rgba(93, 93, 93, 0.03) 100%),linear-gradient(90deg, #ffffff,#ffffff);
     background-repeat: no-repeat;
+  }
+
+  .slogan-area {
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    top: 30%;
+    left: 10%;
   }
 
   .home-page-main {
