@@ -4,6 +4,8 @@
     <t-button @click="savePath(input_path)">更改</t-button>
     <t-button @click="laterSave(input_path)">稍后更改</t-button>
     <p>{{state_path}}</p>
+    你在干什么
+    都是我的错
   </div>
 </template>
 
