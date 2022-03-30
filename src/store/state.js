@@ -3,4 +3,5 @@ export default {
     password: '',
     login_flag: false,
     token: '',
+    username: '',
 }

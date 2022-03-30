@@ -66,6 +66,7 @@ import PublicFooter from "@/components/footer/PublicFooter";
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue';
 import axios from "axios";
 import md5 from "md5";
+import {mapMutations} from "vuex";
 const INITIAL_DATA = {
   account: '',
   password: '',
@@ -81,6 +82,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      saveUsername: 'saveUsername',
+      setLoginFlag: 'setLoginFlag'
+    }),
     onReset() {
       this.$message.success('重置成功');
     },
@@ -97,7 +102,9 @@ export default {
           console.log(resp)
           this.$message.success('登陆成功')
           this.login_btn_loading = false
-          this.$router.push('/roleChoose')
+          this.saveUsername(this.formData.account)
+          this.setLoginFlag(true)
+          this.$router.push('/RoleChoose')
         })
         .catch(err => {
           console.log(err)

@@ -9,3 +9,7 @@ export const getPassword = (state) => {
 export const getLoginFlag = (state) => {
     return state.login_flag
 }
+
+export const getUsername = (state) => {
+    return state.username
+}

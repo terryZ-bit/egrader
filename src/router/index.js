@@ -6,6 +6,7 @@ import testMain from "@/view/test/TestMain";
 import RoleChoose from "@/view/home/RoleChoose";
 import Enroll from "@/view/home/Enroll";
 import ForgotPassword from "@/view/home/ForgotPassword";
+import index from "@/view/index/index";
 
 Vue.use(Router)
 
@@ -41,6 +42,13 @@ export default new Router({
             path: "/ForgotPassword",
             name: "ForgotPassword",
             component: ForgotPassword
+        },
+        {
+            path: "/index",
+            name: "index",
+            component: index
         }
     ],
 })
+
+
