@@ -2,7 +2,22 @@
   <div id="role-choose">
     <t-drawer :visible.sync="drawer_visible"  :closeBtn="true" header="新建角色"
               size="medium">
-
+      <template v-if="drawer_type === 'stu'">
+        <div class="drawer-new-role-inputs">
+          <div>
+            <span style="text-align: left; float: left; margin-top: 10px; margin-bottom: 10px">姓名</span>
+            <t-input placeholder="请输入姓名"></t-input>
+          </div>
+        </div>
+      </template>
+      <template v-else-if="drawer_type === 'tutor'">
+        <div class="drawer-new-role-inputs">
+          <div>
+            <span style="text-align: left; float: left; margin-top: 10px; margin-bottom: 10px">教师</span>
+            <t-input placeholder="请输入教师"></t-input>
+          </div>
+        </div>
+      </template>
     </t-drawer>
     <t-layout style="height: 100%; width: 100%">
       <t-header>
