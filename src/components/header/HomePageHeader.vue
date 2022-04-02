@@ -5,7 +5,6 @@
     </div>
     <div class="navigation-area">
       <t-button theme="default" variant="text">课程列表</t-button>
-      <t-button theme="default" variant="text">角色列表</t-button>
     </div>
     <div class="sign-up-area" style="margin-left: 20px">
       <t-button theme="default" size="medium" variant="text">
